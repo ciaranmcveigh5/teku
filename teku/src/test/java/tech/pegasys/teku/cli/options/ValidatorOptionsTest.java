@@ -148,7 +148,7 @@ public class ValidatorOptionsTest extends AbstractBeaconNodeCommandTest {
 
   @Test
   public void shouldSetValidatorRegistrationTimestampOverride() {
-    final String[] args = {"--validators-builder-registration-timestamp-override", "120000"};
+    final String[] args = {"--Xvalidators-builder-registration-timestamp-override", "120000"};
     final TekuConfiguration config = getTekuConfigurationFromArguments(args);
     assertThat(
             config.validatorClient().getValidatorConfig().getBuilderRegistrationTimestampOverride())
@@ -166,7 +166,7 @@ public class ValidatorOptionsTest extends AbstractBeaconNodeCommandTest {
   @Test
   public void shouldSetValidatorRegistrationPublicKeyOverride() {
     final String[] args = {
-      "--validators-builder-registration-public-key-override",
+      "--Xvalidators-builder-registration-public-key-override",
       "0xa057816155ad77931185101128655c0191bd0214c201ca48ed887f6c4c6adf334070efcd75140eada5ac83a92506dd7a"
     };
     final TekuConfiguration config = getTekuConfigurationFromArguments(args);

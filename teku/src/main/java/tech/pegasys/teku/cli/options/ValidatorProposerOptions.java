@@ -82,7 +82,7 @@ public class ValidatorProposerOptions {
       ValidatorConfig.DEFAULT_VALIDATOR_REGISTRATION_SENDING_BATCH_SIZE;
 
   @Option(
-      names = {"--validators-builder-registration-timestamp-override"},
+      names = {"--Xvalidators-builder-registration-timestamp-override"},
       paramLabel = "<uint64>",
       showDefaultValue = Visibility.ALWAYS,
       description =
@@ -92,7 +92,7 @@ public class ValidatorProposerOptions {
   private UInt64 builderRegistrationTimestampOverride = null;
 
   @Option(
-      names = {"--validators-builder-registration-public-key-override"},
+      names = {"--Xvalidators-builder-registration-public-key-override"},
       paramLabel = "<PUBLIC_KEY>",
       showDefaultValue = Visibility.ALWAYS,
       description =

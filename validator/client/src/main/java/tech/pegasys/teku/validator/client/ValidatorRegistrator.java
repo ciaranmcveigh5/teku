@@ -252,10 +252,41 @@ public class ValidatorRegistrator implements ValidatorTimingChannel {
 
   private ValidatorRegistration createValidatorRegistration(
       final BLSPublicKey publicKey, final Eth1Address feeRecipient, final UInt64 gasLimit) {
+
     final UInt64 timestamp =
         validatorConfig
             .getBuilderRegistrationTimestampOverride()
             .orElse(timeProvider.getTimeInSeconds());
+
+    if validatorConfig.getBuilderRegistrationRequestPayload() {
+      // get request that returns the payload for the validator
+
+      // needs to be at the validator level rather than the VC since we need to know
+      // which keys need to sign which payload
+
+      // get registration payload currently doesn't exist for
+      // POST /eth/v1/builder/validators exist 
+
+      // propose
+      // GET /eth/v1/builder/validator/{pubkey}
+
+      // In DVT pubkey will be pubkey-share
+      // GET is intercepted by DVT middleware which returns payload for that co-validator
+
+      // Using data from GET can run 
+      // ApiSchemas.VALIDATOR_REGISTRATION_SCHEMA.create(feeRecipient, gasLimit, timestamp, publicKey);
+
+      // This endpoint doesn't exist on the beacon so enabling this option 
+      // when not running DVT middleware will result in a failure
+
+      // can work on getting the beacon API updated to include this endpoint to return the
+      // payload for that validator
+
+      // This signed requested payload will be cached by teku so in the instance where we have 100's 
+      // of validators on a single VC there will be a spike in traffic on boot 
+      // however after first registration GET requests are no longer needed 
+    }
+
     return ApiSchemas.VALIDATOR_REGISTRATION_SCHEMA.create(
         feeRecipient, gasLimit, timestamp, publicKey);
   }

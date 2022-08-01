@@ -102,6 +102,16 @@ public class ValidatorProposerOptions {
   private String builderRegistrationPublicKeyOverride = null;
 
   @Option(
+      names = {"--Xvalidators-builder-registration-request-payload"},
+      paramLabel = "<PUBLIC_KEY>",
+      showDefaultValue = Visibility.ALWAYS,
+      description =
+          "Request the validator registration payload to sign.",
+      arity = "1",
+      hidden = true)
+  private boolean builderRegistrationRequestPayload = null;
+
+  @Option(
       names = {"--validators-proposer-blinded-blocks-enabled"},
       paramLabel = "<BOOLEAN>",
       showDefaultValue = Visibility.ALWAYS,
@@ -122,6 +132,7 @@ public class ValidatorProposerOptions {
                 .builderRegistrationDefaultGasLimit(builderRegistrationDefaultGasLimit)
                 .builderRegistrationSendingBatchSize(builderRegistrationSendingBatchSize)
                 .builderRegistrationTimestampOverride(builderRegistrationTimestampOverride)
-                .builderRegistrationPublicKeyOverride(builderRegistrationPublicKeyOverride));
+                .builderRegistrationPublicKeyOverride(builderRegistrationPublicKeyOverride)
+                .builderRegistrationRequestPayload(builderRegistrationRequestPayload));
   }
 }

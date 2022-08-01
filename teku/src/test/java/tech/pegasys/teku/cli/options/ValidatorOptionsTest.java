@@ -179,6 +179,22 @@ public class ValidatorOptionsTest extends AbstractBeaconNodeCommandTest {
   }
 
   @Test
+  public void shouldReportEmptyIfValidatorRegistrationRequestPayloadNotSpecified() {
+    final TekuConfiguration config = getTekuConfigurationFromArguments();
+    assertThat(
+            config.validatorClient().getValidatorConfig().getBuilderRegistrationRequestPayload())
+        .isEmpty();
+  }
+
+  @Test
+  public void shouldEnableValidatorRegistrationWithBlindedBlocks() {
+    final String[] args = {"--Xvalidators-builder-registration-public-key-override", "true"};
+    final TekuConfiguration config = getTekuConfigurationFromArguments(args);
+    assertThat(config.validatorClient().getValidatorConfig().getBuilderRegistrationRequestPayload())
+        .isTrue();
+  }
+
+  @Test
   public void shouldNotUseValidatorsRegistrationByDefault() {
     final String[] args = {};
     final TekuConfiguration config = getTekuConfigurationFromArguments(args);

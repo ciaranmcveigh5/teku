@@ -106,7 +106,7 @@ public class ValidatorProposerOptions {
       paramLabel = "<PUBLIC_KEY>",
       showDefaultValue = Visibility.ALWAYS,
       description =
-          "Endpoint will be called with postfix /{pubkey} must return the correct validator registration payload to sign. Secondary to overrides",
+          "Endpoint will be called with postfix /{pubkey} to get validator registration payload. Will only re-request when timestamp field changes. Secondary to overrides",
       arity = "1",
       hidden = true)
   private String builderRegistrationRequestPayloadEndpoint = null;

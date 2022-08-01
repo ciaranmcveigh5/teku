@@ -195,11 +195,8 @@ class ValidatorRegistratorTest {
   }
 
   @TestTemplate
-  void registersValidators_shouldRegisterWithRequestPayload() {
-    // mock endpoint for validator registration request payload
-    // GET /eth/v1/builder/validator/{pubkey}
-    // Given validator with pubkey x return payload y
-
+  void registersValidators_shouldRegisterWithRequestPayloadEndpoint() {
+    // mock returned payload for RequestPayloadEndpoint
     
     when(validatorConfig.getBuilderRegistrationRequestPayload())
         .thenReturn(Optional.of(BuilderRegistrationRequestPayload));

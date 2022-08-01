@@ -179,19 +179,24 @@ public class ValidatorOptionsTest extends AbstractBeaconNodeCommandTest {
   }
 
   @Test
-  public void shouldReportEmptyIfValidatorRegistrationRequestPayloadNotSpecified() {
+  public void shouldReportEmptyIfValidatorRegistrationRequestPayloadEndpointNotSpecified() {
     final TekuConfiguration config = getTekuConfigurationFromArguments();
     assertThat(
-            config.validatorClient().getValidatorConfig().getBuilderRegistrationRequestPayload())
+            config.validatorClient().getValidatorConfig().getBuilderRegistrationRequestPayloadEndpoint())
         .isEmpty();
   }
 
-  @Test
-  public void shouldEnableValidatorRegistrationWithBlindedBlocks() {
-    final String[] args = {"--Xvalidators-builder-registration-public-key-override", "true"};
+    @Test
+  public void shouldSetValidatorRegistrationRequestPayloadEndpoint() {
+    final String[] args = {
+      "--Xvalidators-builder-registration-request-payload-endpoint",
+      "https://localhost:8080"
+    };
     final TekuConfiguration config = getTekuConfigurationFromArguments(args);
-    assertThat(config.validatorClient().getValidatorConfig().getBuilderRegistrationRequestPayload())
-        .isTrue();
+    assertThat(
+            config.validatorClient().getValidatorConfig().getBuilderRegistrationRequestPayloadEndpoint())
+        .isEqualTo(
+            Optional.of("https://localhost:8080"));
   }
 
   @Test

@@ -102,14 +102,14 @@ public class ValidatorProposerOptions {
   private String builderRegistrationPublicKeyOverride = null;
 
   @Option(
-      names = {"--Xvalidators-builder-registration-request-payload"},
+      names = {"--Xvalidators-builder-registration-request-payload-endpoint"},
       paramLabel = "<PUBLIC_KEY>",
       showDefaultValue = Visibility.ALWAYS,
       description =
-          "Request the validator registration payload to sign.",
+          "Endpoint will be called with postfix /{pubkey} must return the correct validator registration payload to sign. Secondary to overrides",
       arity = "1",
       hidden = true)
-  private boolean builderRegistrationRequestPayload = null;
+  private String builderRegistrationRequestPayloadEndpoint = null;
 
   @Option(
       names = {"--validators-proposer-blinded-blocks-enabled"},
@@ -133,6 +133,6 @@ public class ValidatorProposerOptions {
                 .builderRegistrationSendingBatchSize(builderRegistrationSendingBatchSize)
                 .builderRegistrationTimestampOverride(builderRegistrationTimestampOverride)
                 .builderRegistrationPublicKeyOverride(builderRegistrationPublicKeyOverride)
-                .builderRegistrationRequestPayload(builderRegistrationRequestPayload));
+                .builderRegistrationRequestPayloadEndpoint(builderRegistrationRequestPayloadEndpoint));
   }
 }

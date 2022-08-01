@@ -258,33 +258,21 @@ public class ValidatorRegistrator implements ValidatorTimingChannel {
             .getBuilderRegistrationTimestampOverride()
             .orElse(timeProvider.getTimeInSeconds());
 
-    if validatorConfig.getBuilderRegistrationRequestPayload() {
-      // get request that returns the payload for the validator
+    if validatorConfig.getBuilderRegistrationRequestPayloadEndpoint() {
 
-      // needs to be at the validator level rather than the VC since we need to know
-      // which keys need to sign which payload
+      final String response = httpClient.get(
+            validatorConfig.getBuilderRegistrationRequestPayloadEndpoint(), "/{publicKey}")
 
-      // get registration payload currently doesn't exist for
-      // POST /eth/v1/builder/validators exist 
+      final ValidatorRegistrationSchema payload = jsonProvider.jsonToObject(response, ValidatorRegistrationSchema)
 
-      // propose
-      // GET /eth/v1/builder/validator/{pubkey}
+      // want timestamp override to take priority if set
+      final UInt64 timestamp =
+        validatorConfig
+            .getBuilderRegistrationTimestampOverride()
+            .orElse(payload.timestamp);
 
-      // In DVT pubkey will be pubkey-share
-      // GET is intercepted by DVT middleware which returns payload for that co-validator
-
-      // Using data from GET can run 
-      // ApiSchemas.VALIDATOR_REGISTRATION_SCHEMA.create(feeRecipient, gasLimit, timestamp, publicKey);
-
-      // This endpoint doesn't exist on the beacon so enabling this option 
-      // when not running DVT middleware will result in a failure
-
-      // can work on getting the beacon API updated to include this endpoint to return the
-      // payload for that validator
-
-      // This signed requested payload will be cached by teku so in the instance where we have 100's 
-      // of validators on a single VC there will be a spike in traffic on boot 
-      // however after first registration GET requests are no longer needed 
+      return ApiSchemas.VALIDATOR_REGISTRATION_SCHEMA.create(
+        payload.feeRecipient, payload.gasLimit, timestamp, payload.publicKey); 
     }
 
     return ApiSchemas.VALIDATOR_REGISTRATION_SCHEMA.create(
